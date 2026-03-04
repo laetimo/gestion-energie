@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: gestion-energie
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+      - /dev:/dev  # Accès aux périphériques série (Linky)
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ENABLE_LINKY=true
+      - LINKY_PORT=/dev/ttyUSB0
+      - LINKY_BAUD=2400
+      - ENABLE_BLUETOOTH=true
+      - BLE_SCAN_INTERVAL=30000
+    privileged: true  # Nécessaire pour accéder aux ports série
+    restart: unless-stopped
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge

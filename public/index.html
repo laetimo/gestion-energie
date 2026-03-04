@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi d'Énergie - Gestion Énergie</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <h1>⚡ Suivi d'Énergie</h1>
+            <div class="status">
+                <div class="status-item">
+                    <span id="linky-status" class="status-indicator disconnected"></span>
+                    <span>Linky</span>
+                </div>
+                <div class="status-item">
+                    <span id="ble-status" class="status-indicator disconnected"></span>
+                    <span>Bluetooth</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard principale -->
+        <main class="dashboard">
+            <!-- Carte Linky -->
+            <section class="card card-linky">
+                <h2>Consommation Électrique</h2>
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="label">Puissance instantanée</span>
+                        <span id="power" class="value">-- W</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Index total</span>
+                        <span id="index" class="value">-- kWh</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Tension</span>
+                        <span id="voltage" class="value">-- V</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Intensité</span>
+                        <span id="current" class="value">-- A</span>
+                    </div>
+                </div>
+                <canvas id="powerChart" style="margin-top: 20px;"></canvas>
+            </section>
+
+            <!-- Capteurs Bluetooth -->
+            <section class="card card-sensors">
+                <h2>🌡️ Capteurs de Température/Hygrométrie</h2>
+                <div id="sensors-container" class="sensors-grid">
+                    <div class="sensor-placeholder">
+                        Aucun capteur détecté. Assurez-vous que les capteurs Bluetooth sont à proximité et allumés.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Graphiques -->
+            <section class="card card-charts">
+                <h2>Historique</h2>
+                <div class="chart-controls">
+                    <button class="btn btn-time" data-hours="24">24h</button>
+                    <button class="btn btn-time active" data-hours="72">3 jours</button>
+                    <button class="btn btn-time" data-hours="168">7 jours</button>
+                </div>
+                <canvas id="historyChart"></canvas>
+            </section>
+        </main>
+
+        <!-- Pied de page -->
+        <footer class="footer">
+            <p>Gestion Énergie | Mis à jour: <span id="last-update">--:--:--</span></p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
